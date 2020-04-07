@@ -1,7 +1,10 @@
 import * as express from "express";
+import { scoreService } from "./services";
 
 const router = express.Router();
 
-router.get("/scores", (req, res) => res.status(200).send("Scores"));
+router.get("/scores", async (req, res) =>
+  res.json(await scoreService.getScores())
+);
 
 export { router };
