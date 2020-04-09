@@ -4,6 +4,12 @@ import * as supertest from "supertest";
 import * as http from "http";
 import { router } from "../../routes";
 
+async function removeAllCollections(): Promise<any> {
+  return Object.keys(mongoose.connection.collections).map((name) =>
+    mongoose.connection.collections[name].deleteMany()
+  );
+}
+
 describe("GET /users", () => {
   let app, server;
 
@@ -22,7 +28,8 @@ describe("GET /users", () => {
     server.listen(done);
   });
 
-  afterAll((done) => {
+  afterAll(async (done) => {
+    await removeAllCollections();
     server.close(done);
   });
 
