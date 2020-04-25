@@ -1,6 +1,5 @@
 import * as dotenv from "dotenv";
 import * as express from "express";
-import * as mongoose from "mongoose";
 import * as morgan from "morgan";
 import * as webpack from "webpack";
 import * as webpackDevMiddleware from "webpack-dev-middleware";
@@ -12,13 +11,6 @@ dotenv.config();
 
 const app = express();
 const compiler = webpack(config);
-
-mongoose
-  .connect(process.env.MONGODB_CONNECTION_STRING, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .catch(console.error);
 
 app.use(morgan("dev"));
 app.use(express.json());
